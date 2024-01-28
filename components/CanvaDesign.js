@@ -1,13 +1,10 @@
   import {
     Canvas,
-    Path,
-    Skia,
     useTouchHandler,
     Points,
-    Line,
     vec
   } from "@shopify/react-native-skia";
-  import { Children, useRef, useState } from "react";
+  import { useState } from "react";
   import { StyleSheet } from "react-native";
 
   export default function CanvaDesign({saveImage}) {
@@ -17,7 +14,6 @@
       onActive: () => {},
       onEnd: ({ x, y }) => {
         setPaths(prevPaths => [...prevPaths, vec(x, y)])
-        console.log(paths)
       }
     });
 
