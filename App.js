@@ -16,6 +16,7 @@ export default function App() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [showAppOptions, setShowAppOptions] = useState(false);
   const [isCanvaVisible, setIsCanvaVisible] = useState(false);
+  const [saveImage, setSaveImage] = useState(false);
 
   const pickImageAsync = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -34,6 +35,7 @@ export default function App() {
   const onReset = () => {
     setShowAppOptions(false);
     setIsCanvaVisible(false);
+    setSaveImage(false);
   };
 
   const onAddSticker = () => {
@@ -41,7 +43,7 @@ export default function App() {
   };
 
   const onSaveImageAsync = async () => {
-    // we will implement this later
+    setSaveImage(true);
   };
 
   return (
@@ -51,7 +53,7 @@ export default function App() {
           placeholderImageSource={PlaceholderImage}
           selectedImage={selectedImage}
         />
-        {isCanvaVisible && <CanvaDesign />}
+        {isCanvaVisible && <CanvaDesign saveImage={saveImage} />}
       </View>
       {showAppOptions ? (
         <View style={styles.optionsContainer}>
