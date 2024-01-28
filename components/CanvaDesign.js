@@ -14,8 +14,12 @@
       onActive: () => {},
       onEnd: ({ x, y }) => {
         setPaths(prevPaths => {
-          if (prevPaths.length > 1)
+          if (prevPaths.length == 2){
             return [...prevPaths, vec(x,y), vec(prevPaths[0].x,prevPaths[0].y)]
+          } else if (prevPaths.length > 2) {
+            prevPaths.pop()
+            return [...prevPaths, vec(x,y), vec(prevPaths[0].x,prevPaths[0].y)]
+          }
           return [...prevPaths, vec(x,y)]
         
         })
