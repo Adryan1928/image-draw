@@ -13,7 +13,12 @@
       onStart: () => {},
       onActive: () => {},
       onEnd: ({ x, y }) => {
-        setPaths(prevPaths => [...prevPaths, vec(x, y)])
+        setPaths(prevPaths => {
+          if (prevPaths.length > 1)
+            return [...prevPaths, vec(x,y), vec(prevPaths[0].x,prevPaths[0].y)]
+          return [...prevPaths, vec(x,y)]
+        
+        })
       }
     });
 
@@ -22,7 +27,7 @@
         <Points
           points={paths}
           style="stroke"
-          strokeWidth={2}
+          strokeWidth={4}
           color="#3EB489"
           mode='polygon'
         />
