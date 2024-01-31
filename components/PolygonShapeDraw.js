@@ -12,10 +12,18 @@ export const PolygonShapeDraw = () => {
   const gesture = Gesture.Tap()
     .runOnJS(true)
     .onEnd((e) => {
+      if (edges.length > 2){
+        edges.pop()
+      }
       const newCoordinate = { x: e.x, y: e.y };
       setCoordinates([...coordinates, newCoordinate]);
       const lastEdge = edges.length > 0 ? edges.slice(-1)[0].p2 : newCoordinate;
-      setEdges([...edges, { p1: lastEdge, p2: newCoordinate }]);
+
+      if (edges.length >= 2){
+        setEdges([...edges, { p1: lastEdge, p2: newCoordinate }, {p1: newCoordinate, p2:edges[0].p1}]);
+      } else {
+        setEdges([...edges, { p1: lastEdge, p2: newCoordinate }]);
+      }
     });
 
   return (
