@@ -1,7 +1,7 @@
 import { Canvas, Line, vec } from "@shopify/react-native-skia";
 import { useState } from "react";
 import { StyleSheet, View, Dimensions } from "react-native";
-import { GestureDetector, Gesture } from "react-native-gesture-handler";
+import { GestureDetector, Gesture, GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { VertexShape } from "./VertexShape";
 
@@ -25,6 +25,10 @@ export const PolygonShapeDraw = () => {
         setEdges([...edges, { p1: lastEdge, p2: newCoordinate }]);
       }
     });
+  
+  const gestureVertex = Gesture.Tap().runOnJS(true).onEnd(() => {
+    console.log('Foi')
+  })
 
   return (
     <View style={styles.container}>
@@ -43,7 +47,11 @@ export const PolygonShapeDraw = () => {
             );
           })}
           {coordinates.map((c, index) => (
-            <VertexShape key={index} x={c.x} y={c.y} />
+            <GestureHandlerRootView>
+              <GestureDetector gesture={gestureVertex}>
+                <VertexShape key={index} x={c.x} y={c.y} />
+              </GestureDetector>
+            </GestureHandlerRootView>
           ))}
         </Canvas>
       </GestureDetector>
