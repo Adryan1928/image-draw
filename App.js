@@ -34,11 +34,18 @@ export default function App() {
     <GestureHandlerRootView style={styles.container}>
       <PolygonProvider>
         <View style={styles.imageContainer}>
-          <ImageViewer
-            placeholderImageSource={PlaceholderImage}
-            selectedImage={selectedImage}
-          />
-          {isEditing && <PolygonShapeDraw />}
+          
+          {isEditing ? 
+            <PolygonShapeDraw
+              placeholderImageSource={PlaceholderImage}
+              selectedImage={selectedImage}
+            />
+          : 
+            <ImageViewer
+              placeholderImageSource={PlaceholderImage}
+              selectedImage={selectedImage}
+            />
+          }
         </View>
         {isEditing ? (
           <View style={styles.optionsContainer}>
