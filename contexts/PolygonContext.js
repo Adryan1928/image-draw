@@ -1,4 +1,4 @@
-import { createContext, useReducer, useState } from "react";
+import { createContext, useCallback, useReducer, useState } from "react";
 
 export const createAction = (type, payload) => ({ type, payload });
 
@@ -182,47 +182,47 @@ export const PolygonProvider = ({ children }) => {
     INITIAL_STATE,
   );
 
-  const updatePolygonItemsReducer = (coordinates, edges) => {
+  const updatePolygonItemsReducer = useCallback((coordinates, edges) => {
     const payload = {
       coordinates,
       edges,
     };
 
     dispatch(createAction(POLYGON_ACTION_TYPES.SET_POLYGON_ITEMS, payload));
-  };
+  });
 
-  const addItemToPolygon = (itemToAdd) => {
+  const addItemToPolygon = useCallback((itemToAdd) => {
     const newPolygonItems = addPolygonItem(coordinates, edges, itemToAdd);
     updatePolygonItemsReducer(
       newPolygonItems.coordinates,
       newPolygonItems.edges,
     );
-  };
+  });
 
-  const removeItemFromPolygon = (itemToRemove) => {
+  const removeItemFromPolygon = useCallback((itemToRemove) => {
     const newPolygonItems = removePolygonItem(coordinates, edges, itemToRemove);
     updatePolygonItemsReducer(
       newPolygonItems.coordinates,
       newPolygonItems.edges,
     );
-  };
+  });
 
-  const clearItemFromPolygon = () => {
+  const clearItemFromPolygon = useCallback(() => {
     const newPolygonItems = clearPolygonItem(coordinates, edges);
     updatePolygonItemsReducer(
       newPolygonItems.coordinates,
       newPolygonItems.edges,
     );
-  };
+  });
 
-  const selectItemFromPolygon = (itemToSelect) => {
+  const selectItemFromPolygon = useCallback((itemToSelect) => {
     const existingCoordinate = selectPolygonItem(coordinates, itemToSelect);
     if (existingCoordinate){
       setIsSelectEdit(existingCoordinate)
       setCurrentEdit(existingCoordinate)
     }
-  }
-  const editItemFromPolygon = (itemToEdit) => {
+  })
+  const editItemFromPolygon = useCallback((itemToEdit) => {
     const itemsAndNewCoordinate = editPolygonItem(coordinates, itemToEdit, initalDrag, isSelectEdit, currentEdit);
     const newPolygonItems = {coordinates:itemsAndNewCoordinate.coordinates, edges: itemsAndNewCoordinate.edges}
     updatePolygonItemsReducer(
@@ -230,9 +230,9 @@ export const PolygonProvider = ({ children }) => {
       newPolygonItems.edges,
     );
     setCurrentEdit(itemsAndNewCoordinate.newSelect)
-  }
+  }, [currentEdit])
 
-  const onEditHandle = () => {
+  const onEditHandle = useCallback(() => {
     if (isEditOpen) {
       setIsEditOpen(false);
     } else {
@@ -241,9 +241,9 @@ export const PolygonProvider = ({ children }) => {
       setIsEditVertexOpen(false)
       setIsSelectEdit(false)
     }
-  };
+  })
 
-  const onDeleteHandle = () => {
+  const onDeleteHandle = useCallback(() => {
     if (isDeleteOpen) {
       setIsDeleteOpen(false);
     } else {
@@ -252,9 +252,9 @@ export const PolygonProvider = ({ children }) => {
       setIsEditVertexOpen(false)
       setIsSelectEdit(false)
     }
-  };
+  });
 
-  const onEditVertexHandle = () => {
+  const onEditVertexHandle = useCallback(() => {
     if (isEditVertexOpen){
       setIsEditVertexOpen(false)
       setIsSelectEdit(false)
@@ -264,11 +264,11 @@ export const PolygonProvider = ({ children }) => {
       setIsEditOpen(false)
       setIsSelectEdit(false)
     }
-  } 
+  })
 
-  const onVisibleModal = () => {
+  const onVisibleModal = useCallback(() => {
     setIsModalVisible(!isModalVisible)
-  }
+  })
 
   const value = {
     isEditOpen,
