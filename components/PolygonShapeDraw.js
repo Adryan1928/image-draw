@@ -151,9 +151,7 @@ export const PolygonShapeDraw = ({placeholderImageSource, selectedImage}) => {
               />
           <View style={styles.container}>
           {isEditOpen || isDeleteOpen || isEditVertexOpen ? (
-            <GestureDetector gesture={gestureDragAndTap}>
               <CanvaDraw/>
-            </GestureDetector>
           ) : (
             <GestureDetector gesture={gestureZoom}><CanvaDraw/></GestureDetector>
           )}

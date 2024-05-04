@@ -13,6 +13,8 @@ export const PolygonContext = createContext({
   onEditVertexHandle: () => {},
   coordinates: [],
   edges: [],
+  paths: [],
+  sePaths: () => {},
   addItemToPolygon: () => {},
   removeItemFromPolygon: () => {},
   clearItemFromPolygon: () => {},
@@ -35,6 +37,7 @@ const INITIAL_STATE = {
   isSelectEdit: false,
   coordinates: [],
   edges: [],
+  paths: []
 };
 
 const addPolygonItem = (coordinates, edges, itemToAdd) => {
@@ -176,6 +179,7 @@ export const PolygonProvider = ({ children }) => {
   const [initalDrag, setInitilDrag] = useState({})
   const [currentEdit, setCurrentEdit] = useState({})
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const [paths, setPaths] = useState([])
 
   const [{ coordinates, edges }, dispatch] = useReducer(
     polygonReducer,
@@ -213,6 +217,8 @@ export const PolygonProvider = ({ children }) => {
       newPolygonItems.coordinates,
       newPolygonItems.edges,
     );
+
+    setPaths([])
   });
 
   const selectItemFromPolygon = useCallback((itemToSelect) => {
@@ -271,6 +277,8 @@ export const PolygonProvider = ({ children }) => {
   })
 
   const value = {
+    paths,
+    setPaths,
     isEditOpen,
     setIsEditOpen,
     isDeleteOpen,
